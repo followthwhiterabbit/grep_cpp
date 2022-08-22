@@ -1,0 +1,3 @@
+/home/zornic/projects/grep_cpp/build/CMakeFiles/rebuild_cache.dir
+/home/zornic/projects/grep_cpp/build/CMakeFiles/edit_cache.dir
+/home/zornic/projects/grep_cpp/build/CMakeFiles/grepx.dir

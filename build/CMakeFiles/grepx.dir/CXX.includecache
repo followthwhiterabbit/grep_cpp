@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/zornic/projects/grep_cpp/grep_ex.cpp
+iostream
+-
+stdio.h
+-
+string
+-
+filesystem
+-
+fstream
+-
+sstream
+-
+dirent.h
+-
+
