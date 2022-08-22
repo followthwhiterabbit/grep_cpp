@@ -1,8 +1,0 @@
-*.log
-build/
-.vscode/
-grepex
-grepex.log
-grepex.txt
-file1.txt
-
