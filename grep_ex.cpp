@@ -13,6 +13,26 @@ namespace fs = std::filesystem;
 // #define DIR_PATH = "/home/zornic/projects/grep_cpp"
 
  
+void showing_all_files()
+{
+    std::ofstream log_file; 
+    log_file.open("grep_ex.log"); 
+
+
+
+   std::string path = "/home/zornic/projects/grep_cpp";
+    for (const auto & entry : fs::recursive_directory_iterator(path))
+        {    
+            log_file << entry.path() << std::endl;
+
+        }
+
+        log_file.close(); 
+ 
+}
+
+
+
 
 
 
@@ -21,7 +41,7 @@ namespace fs = std::filesystem;
 int main(int argc, char* argv[])
 {
 
-    
+    /*
 
     if(argc % 2 == 1) // if ./grepex executed once, the following instructions will be prompted 
     {   
@@ -104,6 +124,10 @@ int main(int argc, char* argv[])
         result_file.open(result_filename); 
         }
     
+*/ 
+
+
+
 
 
  /*
@@ -157,6 +181,9 @@ int main(int argc, char* argv[])
         log_file.close(); 
 
 */ 
+
+showing_all_files(); 
+
 
 
 }
