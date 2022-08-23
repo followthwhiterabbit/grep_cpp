@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/zornic/projects/grep_cpp'
+make: Leaving directory '/home/zornic/projects/grep_cpp'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+

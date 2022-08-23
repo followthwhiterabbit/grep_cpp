@@ -12,27 +12,40 @@ namespace fs = std::filesystem;
 
 // #define DIR_PATH = "/home/zornic/projects/grep_cpp"
 
+
+
  
-void showing_all_files()
-{
-    std::ofstream log_file; 
-    log_file.open("grep_ex.log"); 
+void text_file_set(std::string path, std::string search)
+{ 
+     std::ofstream txt_file; 
+      txt_file.open("grep_ex.txt"); 
+  
+  
+    for (const auto  & entry : fs::recursive_directory_iterator(path))
+        {   
 
+            int line_no = 0; 
+             string line; 
+             ifstream infile(entry.path()); 
 
+             while(getline(infile, line))
+             {
 
-   std::string path = "/home/zornic/projects/grep_cpp";
-    for (const auto & entry : fs::recursive_directory_iterator(path))
-        {    
-            log_file << entry.path() << std::endl;
+                ++line_no; 
+                auto pos = line.find(search); 
+                if(pos != string::npos)
+                    {
+                        txt_file << entry.path(); 
+                        txt_file << ":" << line_no << ":" << line << endl; 
+                    }
+
+             }
+           //  log_file << entry.path() << std::endl;
 
         }
+        txt_file.close(); 
 
-        log_file.close(); 
- 
 }
-
-
-
 
 
 
@@ -40,7 +53,6 @@ void showing_all_files()
 
 int main(int argc, char* argv[])
 {
-
     /*
 
     if(argc % 2 == 1) // if ./grepex executed once, the following instructions will be prompted 
@@ -51,10 +63,10 @@ int main(int argc, char* argv[])
         return 1; 
     }
  
-        
+    string search;         
     if(argc == 2)
     {
-        string search = argv[1];
+         search = argv[1];
         ofstream log_file; 
         ofstream result_file; 
 
@@ -70,7 +82,7 @@ int main(int argc, char* argv[])
 
     if(argc == 4 && argv[2] == "-d")
     {
-        string search = argv[1]; 
+         search = argv[1]; 
         string directory = argv[3]; 
 
         ofstream log_file; 
@@ -89,7 +101,7 @@ int main(int argc, char* argv[])
 
     if(argc == 6 && argv[2] == "-d" && argv[4] == "-l")
         {
-        string search = argv[1]; 
+         search = argv[1]; 
         string directory = argv[3]; 
 
         ofstream log_file; 
@@ -108,7 +120,7 @@ int main(int argc, char* argv[])
     
     if(argc == 8 && argv[2] == "-d" && argv[4] == "-l" && argv[6] == "-r" )
         {
-            string search = argv[1]; 
+         search = argv[1]; 
         string directory = argv[3]; 
 
         ofstream log_file; 
@@ -124,8 +136,8 @@ int main(int argc, char* argv[])
         result_file.open(result_filename); 
         }
     
-*/ 
 
+*/ 
 
 
 
@@ -182,7 +194,11 @@ int main(int argc, char* argv[])
 
 */ 
 
-showing_all_files(); 
+
+
+ text_file_set("/home/zornic/Desktop/test", "seyit"); 
+
+
 
 
 
