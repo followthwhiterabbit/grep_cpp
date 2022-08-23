@@ -1,0 +1,4 @@
+"/home/zornic/Desktop/test/text3.txt":2:kaan
+"/home/zornic/Desktop/test/file1/text1.txt":2:kaan
+"/home/zornic/Desktop/test/file1/file2/text2.txt":1:kaan
+5 3

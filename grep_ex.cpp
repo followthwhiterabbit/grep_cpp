@@ -49,15 +49,16 @@ void  text_file_set( fs::path path_to_search , std::string search_str)
 
                 ++line_no; 
                 auto pos = line.find(search); 
-                if(pos != string::npos)
+                if (pos != string::npos)
                     {
                         files_w_pattern++; 
                         txt_file << entry.path(); 
                         txt_file << ":" << line_no << ":" << line << endl; 
                     }
-                if(line_no > 100)
+                
+                if(line_no > 200)
                     return; 
-
+                
              }
            //  log_file << entry.path() << std::endl;
 
@@ -73,44 +74,68 @@ void  text_file_set( fs::path path_to_search , std::string search_str)
 
 
 
+void log_file_set()
+{
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
 
 
 
 int main(int argc, char* argv[])
 {
+    string given_exec = argv[0]; 
+    string file_exec = "./grepex"; 
+
     
     
 
-
-    // if(argc % 2 == 1) // if ./grepex executed once, the following instructions will be prompted 
-    // {   
-    //     cout << "Grepx help: Please insert with the following format\n";
-    //     cout << "Usage: " << argv[0] << " [search_string] [-d][directory] [-l][log file] " 
-    //                                     " [r][result file] [-t][threads]\n"; 
-    //     return 1; 
-    // }
+    if(argc % 2 == 1) // if ./grepex executed once, the following instructions will be prompted 
+    {   
+        cout << "Grepx help: Please insert with the following format\n";
+        cout << "Usage: " << argv[0] << " [search_string] [-d][directory] [-l][log file] " 
+                                        " [r][result file] [-t][threads]\n"; 
+        return 1; 
+    }
+    
     
 
-     
+    string search; 
 
-    // if(argc == 2)
-    // {
-    //    text_file_set(fs::current_path(), argv[1]); 
-    // } 
-    
+    if (argc == 2)
+    {   search = argv[1]; 
+        fs::path cwd = fs::current_path();   
+        text_file_set(cwd, search); 
+    }
 
-
-    //   if (argc == 4 && argv[2] == "-d")
-    //  {
-    //     string directory = argv[3]; 
-
-     
+    else if (argc == 4 && given_exec == file_exec)
+    {
+        string directory = argv[3]; 
+        text_file_set(directory, argv[1]); 
+    }
   
-    //       text_file_set(directory, argv[1]); 
-    //  }
+    
+   
+   //text_file_set("/home/zornic/projects/grep_cpp","karaalioglu"); 
 
 
-    // if(argc == 6 && argv[2] == "-d" && argv[4] == "-l")
+
+
+
+
+    // if (argc == 6 && argv[2] == "-d" && argv[4] == "-l")
     // {
   
 
@@ -130,7 +155,9 @@ int main(int argc, char* argv[])
 //text_file_set("/home/zornic/projects/grep_cpp", "seyit"); 
 
 
-//char *cwd = get_current_dir_name();
+
+
+//text_file_set(argv[3], argv[1]); 
 
 
 
