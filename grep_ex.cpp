@@ -16,18 +16,12 @@
 
 
 
-
-
-
-
-
 using namespace std; 
 using std::filesystem::current_path;
 using namespace std::chrono;
 namespace fs = std::filesystem;
 
 // #define DIR_PATH = "/home/zornic/projects/grep_cpp"
-
 
 
  
@@ -214,7 +208,7 @@ int main(int argc, char* argv[])
     }
     else if (argc == 4 && given_exec == file_exec)
     {   
-        ctpl::thread_pool p(number_of_threads); 
+        // ctpl::thread_pool p(num_of_threads); 
         
          
         flag1 = argv[2]; 
@@ -408,7 +402,6 @@ std::cout << "Log file: " <<  log_file_name << ".log" << std::endl;
 auto stop = high_resolution_clock::now();
 auto duration = duration_cast<microseconds>(stop - start);
 std::cout << "Elapsed time: " << duration.count() << "[ms]" << endl;
-
 
 
 }
