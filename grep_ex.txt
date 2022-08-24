@@ -1,3 +1,0 @@
-"/home/zornic/Desktop/test/text3.txt":3:seyit
-"/home/zornic/Desktop/test/file1/text1.txt":1:seyit
-"/home/zornic/Desktop/test/file1/file2/text2.txt":3:seyit

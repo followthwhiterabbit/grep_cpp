@@ -11,11 +11,14 @@
 #include <sstream>
 #include <dirent.h>
 #include <vector>
+#include <chrono>
+
 
 
 
 using namespace std; 
 using std::filesystem::current_path;
+using namespace std::chrono;
 namespace fs = std::filesystem;
 
 // #define DIR_PATH = "/home/zornic/projects/grep_cpp"
@@ -23,7 +26,7 @@ namespace fs = std::filesystem;
 
 
  
-std::vector<int>  grep_func( fs::path path_to_search , std::string search_str)
+std::vector<int>  grep_func(fs::path path_to_search, std::string search_str, std::string logfname, std::string txtfname)
 { 
     std::vector<int> res; 
     string search = search_str; 
@@ -33,9 +36,17 @@ std::vector<int>  grep_func( fs::path path_to_search , std::string search_str)
     int searched_files = 0, files_w_pattern = 0, patterns_number = 0; 
 
 
-     std::ofstream txt_file; 
-      txt_file.open("grep_ex.txt"); 
-  
+      std::ofstream txt_file; 
+      std::ofstream log_file;
+
+      std::string log_file_name = logfname;
+      std::string txt_file_name = txtfname;
+
+     
+      log_file.open(log_file_name); 
+      txt_file.open(txtfname); 
+        
+    
   
     for (const auto  & entry : fs::recursive_directory_iterator(p))
         {   
@@ -104,6 +115,8 @@ void display_results(int s, int f, int p)
 
 int main(int argc, char* argv[])
 {
+    auto start = high_resolution_clock::now();
+
     int searched_files; 
     int files_w_pattern; 
     int patterns_number; 
@@ -121,12 +134,27 @@ int main(int argc, char* argv[])
     std::string t_flag = "-t"; 
 
 
+    // word to search for 
+    std::string search; 
     
 
     string given_exec = argv[0]; 
     string file_exec = "./grepex"; 
 
+    // default file names 
+    std::string def_log_name = "grepex.log"; 
+    std::string def_txt_name = "grepex.txt"; 
+
+
+    // user defined file names 
+    std::string log_file_name;
+    
+
+
+     // current working directory
+     fs::path cwd = fs::current_path();
      
+
     
     
 
@@ -135,31 +163,46 @@ int main(int argc, char* argv[])
         display_help(); 
         return 1; 
     }
-    
-    
 
-    string search; 
+    if(argc > 1)
+    {
+        search = argv[1]; 
+    }
 
     if (argc == 2)
-    {   search = argv[1]; 
-        fs::path cwd = fs::current_path();   
-        results = grep_func(cwd, search); 
+    {    
+        results = grep_func(cwd.string(), search, def_log_name, def_txt_name); 
         searched_files = results[0]; 
         files_w_pattern = results[1]; 
         patterns_number = results[2]; 
         display_results(searched_files, files_w_pattern, patterns_number); 
     }
     else if (argc == 4 && given_exec == file_exec)
-    {
+    {   
+        std::string directory_value; 
+         
         flag1 = argv[2]; 
 
         if(flag1 == d_flag)
-            string directory = argv[3]; 
+        {
+            directory_value = argv[3];
+            results = grep_func(directory_value, search, def_log_name, def_txt_name);
+            searched_files = results[0]; 
+            files_w_pattern = results[1]; 
+            patterns_number = results[2]; 
+            display_results(searched_files, files_w_pattern, patterns_number);
+        }
         else if(flag1 == l_flag)
             {
+                log_file_name = argv[3];
+                results = grep_func(cwd.string(),search, log_file_name, def_txt_name); 
+                searched_files = results[0]; 
+                files_w_pattern = results[1]; 
+                patterns_number = results[2]; 
+                display_results(searched_files, files_w_pattern, patterns_number);
 
             }
-        else if(flag1 == r_rflag)
+        else if(flag1 == r_flag)
             {
 
             }
@@ -173,14 +216,13 @@ int main(int argc, char* argv[])
             return 1; 
 
         }
-
-
-
-        results = grep_func(directory, argv[1]); 
+        /*
+        results = grep_func(directory_value, search, log_file_name); 
         searched_files = results[0]; 
         files_w_pattern = results[1]; 
         patterns_number = results[2]; 
         display_results(searched_files, files_w_pattern, patterns_number); 
+        */ 
     }
   
     
@@ -241,7 +283,7 @@ int main(int argc, char* argv[])
         flag3 = argv[6];
         flag4 = argv[8];
         
-        if(flag1 == d_flag && flag2 == l_flag && flag3 == r_flag && t_flag)
+        if(flag1 == d_flag && flag2 == l_flag && flag3 == r_flag && flag4 == t_flag)
         {
 
 
@@ -292,6 +334,10 @@ int main(int argc, char* argv[])
 
 //grep_func(argv[3], argv[1]); 
 
+std::cout << "Result file: " << log_file_name << std::endl;
+auto stop = high_resolution_clock::now();
+auto duration = duration_cast<microseconds>(stop - start);
+std::cout << "Elapsed time: " << duration.count() << "[ms]" << endl;
 
 
 
