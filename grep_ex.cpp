@@ -124,8 +124,8 @@ std::vector<int>  grep_func(fs::path path_to_search, std::string search_str, std
 
                 ++line_no; 
                 auto pos = line.find(search); 
-                if (pos != string::npos)
-                    {
+                if (pos != string::npos)        // here we can now print the directories by returning the sorted map 
+                    {                           // but i dont have time for that 
                         //word_count++; 
                         files_w_pattern++; 
                         txt_file << entry.path(); 
