@@ -13,6 +13,8 @@
 #include <vector>
 #include <chrono>       
 #include <future>
+#include <map>
+#include <iterator>
 
 
 
@@ -28,6 +30,7 @@ namespace fs = std::filesystem;
  
 std::vector<int>  grep_func(fs::path path_to_search, std::string search_str, std::string logfname, std::string txtfname)
 { 
+    map<int, int>::iterator itr;
     std::vector<int> res; 
     string search = search_str; 
 
@@ -74,15 +77,22 @@ std::vector<int>  grep_func(fs::path path_to_search, std::string search_str, std
       //log_file.open(log_file_name); 
       //txt_file.open(txtfname); 
         
+    std::map<string, int> m;
     
-  
+    //static int word_count = 0; 
+    
     for (const auto  & entry : fs::recursive_directory_iterator(p))
         {   
 
             int line_no = 0; 
+            int word_count = 0; 
              string line; 
              ifstream infile(entry.path()); 
-
+             std::string curpath = entry.path(); 
+              //m[curpath]++;
+             //std::map<string, int> m; 
+             
+            //int path_counter = 0; 
              while(getline(infile, line))
              {
 
@@ -90,22 +100,39 @@ std::vector<int>  grep_func(fs::path path_to_search, std::string search_str, std
                 auto pos = line.find(search); 
                 if (pos != string::npos)
                     {
+                        //word_count++; 
                         files_w_pattern++; 
                         txt_file << entry.path(); 
                         txt_file << ":" << line_no << ":" << line << std::endl; 
+                          m[curpath]++; 
                     }
+                   // std::cout << word_count; 
                 
                 /*
                 if(line_no > 200)
                     return res; 
                 */
+                
+                 //m[curpath]++; 
+                 
              }
            //  log_file << entry.path() << std::endl;
 
             searched_files++; 
-       
+     
         }
         txt_file.close(); 
+   
+         for(auto itr = m.begin(); itr != m.end(); ++itr)
+            {
+                //std::cout << itr->first << " " << itr->second << std::endl; 
+                patterns_number += itr->second; 
+            }
+         
+        files_w_pattern = m.size();
+
+
+
 
     res.push_back(searched_files); 
     res.push_back(files_w_pattern); 
@@ -373,22 +400,10 @@ int main(int argc, char* argv[])
 
 
 
-
-
-
-
-
-
-
-
-
-
     }
 
 
-  
-
-     
+   
     
     // if (argc == 8 && argv[2] == "-d" && argv[4] == "-l" && argv[6] == "-r" )
     //     { 
