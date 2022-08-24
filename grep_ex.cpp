@@ -11,7 +11,12 @@
 #include <sstream>
 #include <dirent.h>
 #include <vector>
-#include <chrono>
+#include <chrono>       
+#include "ctpl_stl.h" 
+
+
+
+
 
 
 
@@ -136,11 +141,6 @@ void display_results(int s, int f, int p)
 }
 
 
-
-
-
-
-
 int main(int argc, char* argv[])
 {
     auto start = high_resolution_clock::now();
@@ -148,6 +148,9 @@ int main(int argc, char* argv[])
     int searched_files; 
     int files_w_pattern; 
     int patterns_number; 
+    int num_of_threads = 4; // default value for the number of threads 
+
+
 
     std::vector<int> results; 
 
@@ -211,6 +214,7 @@ int main(int argc, char* argv[])
     }
     else if (argc == 4 && given_exec == file_exec)
     {   
+        ctpl::thread_pool p(number_of_threads); 
         
          
         flag1 = argv[2]; 
@@ -399,7 +403,8 @@ int main(int argc, char* argv[])
 
 //grep_func(argv[3], argv[1]); 
 
-std::cout << "Result file: " << log_file_name << std::endl;
+std::cout << "Result file: " << text_file_name << ".txt" << std::endl;
+std::cout << "Log file: " <<  log_file_name << ".log" << std::endl; 
 auto stop = high_resolution_clock::now();
 auto duration = duration_cast<microseconds>(stop - start);
 std::cout << "Elapsed time: " << duration.count() << "[ms]" << endl;
