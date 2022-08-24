@@ -35,16 +35,44 @@ std::vector<int>  grep_func(fs::path path_to_search, std::string search_str, std
 
     int searched_files = 0, files_w_pattern = 0, patterns_number = 0; 
 
+    // default file names 
+    std::string def_log_filename = "grepex.log"; 
+    std::string def_txt_filename = "grepex.txt"; 
 
       std::ofstream txt_file; 
       std::ofstream log_file;
 
-      std::string log_file_name = logfname;
-      std::string txt_file_name = txtfname;
+    std::string log_file_name; 
+    std::string text_file_name; 
+
+    if(logfname == def_log_filename)
+        {
+            log_file_name = logfname;
+            log_file.open(def_log_filename);     
+        }
+    else
+        {
+            log_file_name = logfname + ".log";
+            log_file.open(log_file_name); 
+        }
+
+    if(txtfname == def_txt_filename)
+        {
+            text_file_name == txtfname;
+            txt_file.open(def_txt_filename);
+        }
+    else
+    {
+        text_file_name = txtfname + ".txt";
+        txt_file.open(text_file_name); 
+    }
+
+      //std::string log_file_name = logfname;
+      //std::string txt_file_name = txtfname;
 
      
-      log_file.open(log_file_name); 
-      txt_file.open(txtfname); 
+      //log_file.open(log_file_name); 
+      //txt_file.open(txtfname); 
         
     
   
@@ -148,11 +176,15 @@ int main(int argc, char* argv[])
 
     // user defined file names 
     std::string log_file_name;
-    
+    std::string text_file_name; 
+
 
 
      // current working directory
      fs::path cwd = fs::current_path();
+
+     std::string directory_value; 
+
      
 
     
@@ -179,7 +211,7 @@ int main(int argc, char* argv[])
     }
     else if (argc == 4 && given_exec == file_exec)
     {   
-        std::string directory_value; 
+        
          
         flag1 = argv[2]; 
 
@@ -204,10 +236,19 @@ int main(int argc, char* argv[])
             }
         else if(flag1 == r_flag)
             {
+                text_file_name = argv[3];
+                results = grep_func(cwd.string(),search, def_log_name, text_file_name); 
+                searched_files = results[0]; 
+                files_w_pattern = results[1]; 
+                patterns_number = results[2]; 
+                display_results(searched_files, files_w_pattern, patterns_number);
+
 
             }
-        else if(flag1 == t_flag)
+        else if(flag1 == t_flag) // I DON'T KNOW THIS YET 
             {
+
+
 
             }
         else
@@ -235,15 +276,31 @@ int main(int argc, char* argv[])
         flag2 = argv[4]; 
         if(flag1 == d_flag && flag2 == l_flag)
         {
+            directory_value = argv[3];
+            log_file_name = argv[5];
+            results = grep_func(directory_value,search, log_file_name, def_txt_name);
+            searched_files = results[0]; 
+            files_w_pattern = results[1]; 
+            patterns_number = results[2]; 
+            display_results(searched_files, files_w_pattern, patterns_number);
 
         }
         else if(flag1 == l_flag && flag2 == r_flag)
         {
-
+            log_file_name = argv[3]; 
+            text_file_name = argv[5]; 
+            results = grep_func(cwd.string(),search, log_file_name, text_file_name);
+            searched_files = results[0]; 
+            files_w_pattern = results[1]; 
+            patterns_number = results[2]; 
+            display_results(searched_files, files_w_pattern, patterns_number);
 
         }
-        else if(flag1 == r_flag && flag2 == t_flag)
+        else if(flag1 == r_flag && flag2 == t_flag) // t flag not known yet 
         {
+            text_file_name = argv[3]; 
+
+
 
         }
         
@@ -256,6 +313,14 @@ int main(int argc, char* argv[])
         
         if(flag1 == d_flag && flag2 == l_flag && flag3 == r_flag)
         {
+            directory_value = argv[3]; 
+            log_file_name = argv[5];
+            text_file_name = argv[7];
+            results = grep_func(directory_value, search, log_file_name, text_file_name);
+            searched_files = results[0]; 
+            files_w_pattern = results[1]; 
+            patterns_number = results[2]; 
+            display_results(searched_files, files_w_pattern, patterns_number);
 
         }
         else if(flag1 == l_flag && flag2 == r_flag && flag3 == t_flag)
