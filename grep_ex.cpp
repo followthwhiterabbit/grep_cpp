@@ -12,7 +12,8 @@
 #include <dirent.h>
 #include <vector>
 #include <chrono>       
-#include "ctpl_stl.h" 
+#include <future>
+
 
 
 
@@ -61,10 +62,10 @@ std::vector<int>  grep_func(fs::path path_to_search, std::string search_str, std
             txt_file.open(def_txt_filename);
         }
     else
-    {
+        {
         text_file_name = txtfname + ".txt";
         txt_file.open(text_file_name); 
-    }
+        }
 
       //std::string log_file_name = logfname;
       //std::string txt_file_name = txtfname;
@@ -115,6 +116,16 @@ return res;
 }
 
 
+/*
+std::packaged_task<std::vector<int>> task_thread()
+{
+    //std::packaged_task<std::vector(fs::path, std::string, std::string, std::string) task(grep_func); 
+    //std::future<std::vector<int>> result = task.get_future(); 
+
+    // std::thread task_td(std::move(task), )
+
+}
+*/ 
 
 
 void display_help()
