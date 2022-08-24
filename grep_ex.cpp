@@ -15,7 +15,7 @@
 #include <future>
 #include <map>
 #include <iterator>
-
+#include <algorithm>
 
 
 
@@ -26,7 +26,33 @@ namespace fs = std::filesystem;
 
 // #define DIR_PATH = "/home/zornic/projects/grep_cpp"
 
+bool compare_dir(std::pair<std::string, int>&a,
+                 std::pair<std::string, int>&b)
+{
+    return a.second > b.second; 
+}
 
+std::map<string, int> sort_func(std::map<std::string, int>& M)
+{
+    
+    std::vector<pair<string, int>> temp;
+
+    for(auto &it : M)
+        temp.push_back(it); 
+
+
+    sort(temp.begin(), temp.end(), compare_dir); 
+
+
+    std::map<string, int> result; 
+
+    for(auto &el : temp)
+        result[el.first] = el.second; 
+
+    
+    return result; 
+
+}
  
 std::vector<int>  grep_func(fs::path path_to_search, std::string search_str, std::string logfname, std::string txtfname)
 { 
@@ -121,6 +147,8 @@ std::vector<int>  grep_func(fs::path path_to_search, std::string search_str, std
             searched_files++; 
      
         }
+
+
         txt_file.close(); 
    
          for(auto itr = m.begin(); itr != m.end(); ++itr)
