@@ -92,7 +92,7 @@ std::vector<int>  grep_func(fs::path path_to_search, std::string search_str, std
                     {
                         files_w_pattern++; 
                         txt_file << entry.path(); 
-                        txt_file << ":" << line_no << ":" << line << endl; 
+                        txt_file << ":" << line_no << ":" << line << std::endl; 
                     }
                 
                 /*
@@ -130,8 +130,8 @@ std::packaged_task<std::vector<int>> task_thread()
 
 void display_help()
 {
-        cout << "Grepx help: Please insert with the following format\n";
-        cout << "Usage: " << "./grepex " << " [search_string] [-d][directory] [-l][log file] " 
+        std::cout << "Grepx help: Please insert with the following format\n";
+        std::cout << "Usage: " << "./grepex " << " [search_string] [-d][directory] [-l][log file] " 
                                         " [r][result file] [-t][threads]\n"; 
 }
 
@@ -174,8 +174,8 @@ int main(int argc, char* argv[])
     std::string search; 
     
 
-    string given_exec = argv[0]; 
-    string file_exec = "./grepex"; 
+    std::string given_exec = argv[0]; 
+    std::string file_exec = "./grepex"; 
 
     // default file names 
     std::string def_log_name = "grepex.log"; 
@@ -412,7 +412,7 @@ std::cout << "Result file: " << text_file_name << ".txt" << std::endl;
 std::cout << "Log file: " <<  log_file_name << ".log" << std::endl; 
 auto stop = high_resolution_clock::now();
 auto duration = duration_cast<microseconds>(stop - start);
-std::cout << "Elapsed time: " << duration.count() << "[ms]" << endl;
+std::cout << "Elapsed time: " << duration.count() << "[ms]" << std::endl;
 
 
 }
