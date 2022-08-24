@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug 23 17:43:46 2022
+# Make data base, printed on Wed Aug 24 07:19:02 2022
 
 # Variables
 
@@ -49,7 +47,7 @@ VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:45410
+JOURNAL_STREAM = 8:49416
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -73,7 +71,7 @@ XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/d
 # environment
 DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
-MANAGERPID = 1132
+MANAGERPID = 1155
 # environment
 LC_NAME = pl_PL.UTF-8
 # environment
@@ -87,7 +85,7 @@ PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/followthewhiterabbit:@/tmp/.ICE-unix/1388,unix/followthewhiterabbit:/tmp/.ICE-unix/1388
+SESSION_MANAGER = local/followthewhiterabbit:@/tmp/.ICE-unix/1426,unix/followthewhiterabbit:/tmp/.ICE-unix/1426
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -103,7 +101,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 6ed57612f60b4fe2bdad47cecc3eace5
+INVOCATION_ID = 247282eb7cc747438c7fa1334d56be00
 # environment
 GDK_PIXBUF_MODULEDIR = /snap/code/105/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
@@ -123,7 +121,7 @@ PWD = /home/zornic/projects/grep_cpp
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1345
+SSH_AGENT_PID = 1372
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -231,11 +229,11 @@ SNAP_NAME = code
 # environment
 LC_ALL = C
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/55f2765e_cd58_45d7_b645_557c2512bb24
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/9ec2be02_aa6b_48df_b8bb_ee364e87a796
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.96
+GNOME_TERMINAL_SERVICE = :1.89
 # default
 SUFFIXES := 
 # environment
@@ -257,7 +255,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 3473
+VSCODE_PID = 3595
 # variable set hash-table stats:
 # Load=123/1024=12%, Rehash=0, Collisions=18/145=12%
 
@@ -267,9 +265,9 @@ VSCODE_PID = 3473
 
 # Directories
 
-# . (device 66306, inode 1972906): 10 files, no impossibilities.
+# . (device 66306, inode 1972906): 11 files, no impossibilities.
 
-# 10 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -298,8 +296,10 @@ makefile:
 #  File has been updated.
 #  Failed to be updated.
 
- 
 # Not a target:
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 .DEFAULT:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -320,12 +320,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 18 / storage = 163 B / avg = 9 B
-# current buf: size = 8162 B / used = 163 B / count = 18 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 19 / storage = 175 B / avg = 9 B
+# current buf: size = 8162 B / used = 175 B / count = 19 / avg = 9 B
 
-# strcache performance: lookups = 21 / hit rate = 14%
+# strcache performance: lookups = 22 / hit rate = 13%
 # hash-table stats:
-# Load=18/8192=0%, Rehash=0, Collisions=1/21=5%
-# Finished Make data base on Tue Aug 23 17:43:46 2022
+# Load=19/8192=0%, Rehash=0, Collisions=1/22=5%
+# Finished Make data base on Wed Aug 24 07:19:02 2022
 
  
