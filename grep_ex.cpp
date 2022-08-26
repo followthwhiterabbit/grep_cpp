@@ -128,6 +128,7 @@ grep_func(fs::path path_to_search, std::string search_str, std::string logfname,
                         files_w_pattern++; 
                         txt_file << entry.path(); 
                         txt_file << ":" << line_no << ":" << line << std::endl; 
+                        log_file << std::this_thread::get_id() << ": " << entry.path() << std::endl; 
                           m[curpath]++; 
                     }
                    // std::cout << word_count; 
@@ -152,6 +153,8 @@ grep_func(fs::path path_to_search, std::string search_str, std::string logfname,
 
         // txt_file << el.first << std::endl; 
 
+
+        /*
         
           for(auto sortitr = sorted.begin(); sortitr != sorted.end(); sortitr++)
             {
@@ -160,6 +163,7 @@ grep_func(fs::path path_to_search, std::string search_str, std::string logfname,
 
             }
          
+         */ 
 
         txt_file.close(); 
    
@@ -318,9 +322,6 @@ int main(int argc, char* argv[])
                         thread.join(); 
                     }
     
-
-
-
             }
         else
         {
@@ -363,10 +364,17 @@ int main(int argc, char* argv[])
         else if(flag1 == r_flag && flag2 == t_flag) // t flag not known yet 
         {
             text_file_name = argv[3]; 
+            num_of_threads = atoi(argv[5]); 
 
+            for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, cwd.string(), std::ref(search), std::ref(def_log_name),std::ref(text_file_name), std::ref(results)); 
+                }
 
-
-
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
         }
         
     }
@@ -386,13 +394,36 @@ int main(int argc, char* argv[])
         }
         else if(flag1 == l_flag && flag2 == r_flag && flag3 == t_flag)
         {
-            
+            log_file_name = argv[3]; 
+            text_file_name = argv[5];
+            num_of_threads = atoi(argv[7]);
 
+            for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, cwd.string(), std::ref(search), std::ref(def_log_name),std::ref(text_file_name), std::ref(results)); 
+                }
+
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
+            
         }
         else if(flag1 == d_flag && flag2 == r_flag && flag3 == t_flag)     
         {
+            directory_value = argv[3];
+            text_file_name = argv[5];
+            num_of_threads = atoi(argv[7]); 
 
+            for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, directory_value, std::ref(search), std::ref(def_log_name),std::ref(text_file_name), std::ref(results)); 
+                }
 
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
         }
         else
         {
