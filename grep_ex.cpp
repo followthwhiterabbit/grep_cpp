@@ -442,9 +442,20 @@ int main(int argc, char* argv[])
         
         if(flag1 == d_flag && flag2 == l_flag && flag3 == r_flag && flag4 == t_flag)
         {
+            directory_value = argv[3];
+            log_file_name = argv[5];
+            text_file_name = argv[7]; 
+            num_of_threads = atoi(argv[9]);
 
+            for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, directory_value, std::ref(search), std::ref(def_log_name),std::ref(text_file_name), std::ref(results)); 
+                }
 
-
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
 
         }
         else 
@@ -452,7 +463,6 @@ int main(int argc, char* argv[])
             display_help();
             return 1; 
         }
-
 
 
 
