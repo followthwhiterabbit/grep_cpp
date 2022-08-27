@@ -18,7 +18,6 @@
 #include <thread> 
 
 
-
 using namespace std; 
 using std::filesystem::current_path;
 using namespace std::chrono;
@@ -37,10 +36,8 @@ std::vector<std::pair<std::string, int>> sort_func(std::map<std::string, int>& M
     
     std::vector<pair<string, int>> temp;
 
-
     for(auto &it : M)
         temp.push_back(it); 
-
 
     sort(temp.begin(), temp.end(), compare_dir); 
 
@@ -234,16 +231,10 @@ int main(int argc, char* argv[])
     std::string text_file_name; 
 
 
-
      // current working directory
      fs::path cwd = fs::current_path();
 
      std::string directory_value; 
-
-     
-
-    
-    
 
     if(argc % 2 == 1) // if ./grepex executed once, the following instructions will be prompted 
     {   
@@ -343,12 +334,7 @@ int main(int argc, char* argv[])
 
         }
     }
-  
-    
-   
-   //grep_func("/home/zornic/projects/grep_cpp","karaalioglu"); 
-
-     if (argc == 6)
+    else if (argc == 6)
      {
         flag1 = argv[2];
         flag2 = argv[4]; 
@@ -417,7 +403,7 @@ int main(int argc, char* argv[])
             }
         
     }
-    if(argc == 8)
+    else if(argc == 8)
     {   
         flag1 = argv[2];
         flag2 = argv[4];
@@ -479,8 +465,7 @@ int main(int argc, char* argv[])
         }
 
     }
-    
-    if (argc == 10)
+    else if (argc == 10)
     {
         flag1 = argv[2];
         flag2 = argv[4];
