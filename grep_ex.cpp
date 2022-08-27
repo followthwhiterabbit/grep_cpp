@@ -93,17 +93,9 @@ grep_func(fs::path path_to_search, std::string search_str, std::string logfname,
         text_file_name = txtfname + ".txt";
         txt_file.open(text_file_name); 
         }
-
-      //std::string log_file_name = logfname;
-      //std::string txt_file_name = txtfname;
-
-     
-      //log_file.open(log_file_name); 
-      //txt_file.open(txtfname); 
         
     std::map<string, int> m;
     
-    //static int word_count = 0; 
     
     for (const auto  & entry : fs::recursive_directory_iterator(p))
         {   
@@ -232,9 +224,6 @@ int main(int argc, char* argv[])
     std::string search; 
     
 
-    std::string given_exec = argv[0]; 
-    std::string file_exec = "./grepex"; 
-
     // default file names 
     std::string def_log_name = "grepex.log"; 
     std::string def_txt_name = "grepex.txt"; 
@@ -279,7 +268,7 @@ int main(int argc, char* argv[])
                         thread.join(); 
                     }
     }
-    else if (argc == 4 && given_exec == file_exec)
+    else if (argc == 4)
     {   
         // ctpl::thread_pool p(num_of_threads); 
         
@@ -353,13 +342,6 @@ int main(int argc, char* argv[])
             return 1; 
 
         }
-        /*
-        results = grep_func(directory_value, search, log_file_name); 
-        searched_files = results[0]; 
-        files_w_pattern = results[1]; 
-        patterns_number = results[2]; 
-        display_results(searched_files, files_w_pattern, patterns_number); 
-        */ 
     }
   
     
@@ -401,7 +383,7 @@ int main(int argc, char* argv[])
                     }
 
         }
-        else if(flag1 == r_flag && flag2 == t_flag) // t flag not known yet 
+        else if(flag1 == r_flag && flag2 == t_flag)
         {
             text_file_name = argv[3]; 
             num_of_threads = atoi(argv[5]); 
@@ -533,27 +515,17 @@ int main(int argc, char* argv[])
 
     }
 
-
-   
-    
-    // if (argc == 8 && argv[2] == "-d" && argv[4] == "-l" && argv[6] == "-r" )
-    //     { 
- 
-
-    //     }
    
  // tfs::path curent_p = fs::current_path(); 
  //grep_func("/home/zornic/Desktop/test", "seyit"); 
 //grep_func("/home/zornic/projects/grep_cpp", "karaalioglu"); 
 
 
-//grep_func("/home/zornic/projects/grep_cpp", "seyit"); 
-//grep_func(argv[3], argv[1]); 
 std::cout << "Searched files: " << results.at(0) << std::endl; 
 std::cout << "Files with pattern: " << results.at(1) << std::endl; 
 std::cout << "Patterns_number: " << results.at(2) << std::endl; 
-std::cout << "Result file: " << text_file_name << ".txt" << std::endl;
-std::cout << "Log file: " <<  log_file_name << ".log" << std::endl; 
+std::cout << "Result file: " << text_file_name << std::endl;
+std::cout << "Log file: " <<  log_file_name  << std::endl; 
 std::cout << "Used threads: " << num_of_threads << std::endl; 
 auto stop = high_resolution_clock::now();
 auto duration = duration_cast<microseconds>(stop - start);
