@@ -60,7 +60,7 @@ grep_func(fs::path path_to_search, std::string search_str, std::string logfname,
 
     fs::path p = path_to_search; 
 
-    int searched_files = 0, files_w_pattern = 0, patterns_number = 0; 
+    size_t searched_files = 0, files_w_pattern = 0, patterns_number = 0; 
 
     // default file names 
     std::string def_log_filename = "grepex.log"; 
@@ -108,8 +108,8 @@ grep_func(fs::path path_to_search, std::string search_str, std::string logfname,
     for (const auto  & entry : fs::recursive_directory_iterator(p))
         {   
 
-            int line_no = 0; 
-            int word_count = 0; 
+            size_t line_no = 0; 
+            size_t word_count = 0; 
              string line; 
              ifstream infile(entry.path()); 
              std::string curpath = entry.path(); 
@@ -203,23 +203,13 @@ void display_help()
 }
 
 
-
-void display_results(int s, int f, int p)
-{
-    std::cout << "Searched files: " << s << std::endl; 
-    std::cout << "Files with pattern: " << f << std::endl; 
-    std::cout << "Patterns_number: " << p << std::endl; 
-    
-}
-
-
 int main(int argc, char* argv[])
 {
     auto start = high_resolution_clock::now();
 
-    int searched_files; 
-    int files_w_pattern; 
-    int patterns_number; 
+    size_t searched_files; 
+    size_t files_w_pattern; 
+    size_t patterns_number; 
     size_t num_of_threads = 4; // default value for the number of threads 
 
 
@@ -279,7 +269,15 @@ int main(int argc, char* argv[])
 
     if (argc == 2)
     {    
-        grep_func(cwd.string(), search, def_log_name, def_txt_name, results); 
+        for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, cwd.string(), std::ref(search), std::ref(def_log_name),std::ref(text_file_name), std::ref(results)); 
+                }
+
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
     }
     else if (argc == 4 && given_exec == file_exec)
     {   
@@ -291,19 +289,45 @@ int main(int argc, char* argv[])
         if(flag1 == d_flag)
         {
             directory_value = argv[3];
-            grep_func(directory_value, search, def_log_name, def_txt_name, results);
+            for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, directory_value, std::ref(search), std::ref(def_log_name),std::ref(def_txt_name), std::ref(results)); 
+                }
+
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
+
+            
         }
         else if(flag1 == l_flag)
             {
                 log_file_name = argv[3];
-                grep_func(cwd.string(),search, log_file_name, def_txt_name, results); 
+               for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, cwd.string(), std::ref(search), std::ref(log_file_name),std::ref(def_txt_name), std::ref(results)); 
+                }
+
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
 
 
             }
         else if(flag1 == r_flag)
             {
                 text_file_name = argv[3];
-                grep_func(cwd.string(),search, def_log_name, text_file_name, results); 
+                for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, cwd.string(), std::ref(search), std::ref(def_log_name),std::ref(text_file_name), std::ref(results)); 
+                }
+
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
             
 
 
@@ -314,7 +338,7 @@ int main(int argc, char* argv[])
                 num_of_threads = atoi(argv[3]); 
                 for( size_t i = 0; i < num_of_threads; i++) // cwd.string() is an r-value already,
                     {                                       // but we need to send the others as std::ref 
-                        threads.emplace_back(grep_func, cwd.string(), std::ref(search), std::ref(def_log_name),std::ref(text_file_name), std::ref(results)); 
+                        threads.emplace_back(grep_func, cwd.string(), std::ref(search), std::ref(def_log_name),std::ref(def_txt_name), std::ref(results)); 
                     }
 
                 for(auto & thread : threads)
@@ -350,7 +374,15 @@ int main(int argc, char* argv[])
         {
             directory_value = argv[3];
             log_file_name = argv[5];
-            grep_func(directory_value,search, log_file_name, def_txt_name, results);
+            for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, directory_value, std::ref(search), std::ref(log_file_name),std::ref(def_txt_name), std::ref(results)); 
+                }
+
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
             
 
         }
@@ -358,7 +390,15 @@ int main(int argc, char* argv[])
         {
             log_file_name = argv[3]; 
             text_file_name = argv[5]; 
-            grep_func(cwd.string(),search, log_file_name, text_file_name, results);
+            for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, cwd.string(), std::ref(search), std::ref(log_file_name),std::ref(text_file_name), std::ref(results)); 
+                }
+
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
 
         }
         else if(flag1 == r_flag && flag2 == t_flag) // t flag not known yet 
@@ -376,6 +416,23 @@ int main(int argc, char* argv[])
                         thread.join(); 
                     }
         }
+        else if(flag1 == d_flag && flag2 == r_flag)
+        {
+            directory_value = argv[3]; 
+            text_file_name = argv[5];
+            for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, directory_value, std::ref(search), std::ref(def_log_name),std::ref(text_file_name), std::ref(results)); 
+                }
+
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
+
+            
+
+            }
         
     }
     if(argc == 8)
@@ -389,7 +446,15 @@ int main(int argc, char* argv[])
             directory_value = argv[3]; 
             log_file_name = argv[5];
             text_file_name = argv[7];
-            grep_func(directory_value, search, log_file_name, text_file_name, results);
+            for( size_t i = 0; i < num_of_threads; i++)
+                {                                       
+                    threads.emplace_back(grep_func, directory_value, std::ref(search), std::ref(log_file_name),std::ref(text_file_name), std::ref(results)); 
+                }
+
+                for(auto & thread : threads)
+                    {
+                        thread.join(); 
+                    }
 
         }
         else if(flag1 == l_flag && flag2 == r_flag && flag3 == t_flag)
@@ -400,7 +465,7 @@ int main(int argc, char* argv[])
 
             for( size_t i = 0; i < num_of_threads; i++)
                 {                                       
-                    threads.emplace_back(grep_func, cwd.string(), std::ref(search), std::ref(def_log_name),std::ref(text_file_name), std::ref(results)); 
+                    threads.emplace_back(grep_func, cwd.string(), std::ref(search), std::ref(log_file_name),std::ref(text_file_name), std::ref(results)); 
                 }
 
                 for(auto & thread : threads)
@@ -449,7 +514,7 @@ int main(int argc, char* argv[])
 
             for( size_t i = 0; i < num_of_threads; i++)
                 {                                       
-                    threads.emplace_back(grep_func, directory_value, std::ref(search), std::ref(def_log_name),std::ref(text_file_name), std::ref(results)); 
+                    threads.emplace_back(grep_func, directory_value, std::ref(search), std::ref(log_file_name),std::ref(text_file_name), std::ref(results)); 
                 }
 
                 for(auto & thread : threads)
@@ -483,20 +548,16 @@ int main(int argc, char* argv[])
 
 
 //grep_func("/home/zornic/projects/grep_cpp", "seyit"); 
-
-
-
-
 //grep_func(argv[3], argv[1]); 
 std::cout << "Searched files: " << results.at(0) << std::endl; 
 std::cout << "Files with pattern: " << results.at(1) << std::endl; 
 std::cout << "Patterns_number: " << results.at(2) << std::endl; 
 std::cout << "Result file: " << text_file_name << ".txt" << std::endl;
 std::cout << "Log file: " <<  log_file_name << ".log" << std::endl; 
+std::cout << "Used threads: " << num_of_threads << std::endl; 
 auto stop = high_resolution_clock::now();
 auto duration = duration_cast<microseconds>(stop - start);
 std::cout << "Elapsed time: " << duration.count() << "[ms]" << std::endl;
-
 
 }
 
